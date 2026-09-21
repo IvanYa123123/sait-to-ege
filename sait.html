@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>План подготовки к ЕГЭ по математике</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        
+        /* Стилизация скроллбара */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Анимация аккордеона */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary ~ * {
+            animation: slideDown 0.2s ease-in-out;
+        }
+        @keyframes slideDown {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Кастомный чекбокс */
+        .custom-checkbox {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.25em;
+            height: 1.25em;
+            border: 2px solid #cbd5e1;
+            border-radius: 0.35em;
+            display: grid;
+            place-content: center;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .custom-checkbox::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em white;
+            background-color: transform;
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+        .custom-checkbox:checked {
+            background-color: #6366f1; /* Indigo-500 */
+            border-color: #6366f1;
+        }
+        .custom-checkbox:checked::before {
+            transform: scale(1);
+        }
+        .custom-checkbox:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Стилизация прогресс-бара */
+        .progress-bar-fill {
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen pb-20">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm px-4 py-4 mb-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="flex justify-between items-end mb-2">
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-slate-800">Календарь ЕГЭ</h1>
+                    <p class="text-xs md:text-sm text-slate-500" id="auth-status">Синхронизация...</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-2xl font-bold text-indigo-600" id="progress-text">0%</span>
+                    <p class="text-xs text-slate-500" id="progress-count">0 / 0 тем</p>
+                </div>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
+                <div id="progress-bar" class="bg-indigo-500 h-3 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4" id="app-container">
+        <!-- Контент генерируется через JS -->
+    </main>
+
+    <script type="module">
+        const syllabusData = [
+            {
+                title: "Блок 1: Базовая алгебра и функции (Дни 1–5)",
+                days: [
+                    {
+                        dayNum: 1, title: "Линейные уравнения и модули", isRest: false, topics: [
+                            { id: "t_1_1", name: "Решение уравнений (база)", diff: "easy" },
+                            { id: "t_1_2", name: "Линейное уравнение с одной переменной", diff: "easy" },
+                            { id: "t_1_3", name: "Модуль числа. Алгебраическое определение модуля", diff: "medium" },
+                            { id: "t_1_4", name: "Уравнение с модулем", diff: "medium" }
+                        ]
+                    },
+                    {
+                        dayNum: 2, title: "Выражения и многочлены", isRest: false, topics: [
+                            { id: "t_2_1", name: "Тождество и тождественные выражения", diff: "easy" },
+                            { id: "t_2_2", name: "Одночлен", diff: "easy" },
+                            { id: "t_2_3", name: "Многочлен", diff: "easy" },
+                            { id: "t_2_4", name: "Способ группировки", diff: "medium" }
+                        ]
+                    },
+                    {
+                        dayNum: 3, title: "Функции и прямые", isRest: false, topics: [
+                            { id: "t_3_1", name: "Функция, некоторые виды ООФ", diff: "medium" },
+                            { id: "t_3_2", name: "Линейная функция и её частный случай", diff: "easy" },
+                            { id: "t_3_3", name: "Взаимное расположение прямых, перпендикулярные прямые", diff: "medium" },
+                            { id: "t_3_4", name: "Нахождение координат точки пересечения алгебраически", diff: "medium" }
+                        ]
+                    },
+                    {
+                        dayNum: 4, title: "Системы уравнений", isRest: false, topics: [
+                            { id: "t_4_1", name: "Линейное уравнение с двумя переменными", diff: "easy" },
+                            { id: "t_4_2", name: "Графический способ решения систем уравнений", diff: "medium" },
+                            { id: "t_4_3", name: "Решение системы уравнений способом подстановки", diff: "medium" },
+                            { id: "t_4_4", name: "Решение систем уравнений способом сложения", diff: "medium" }
+                        ]
+                    },
+                    {
+                        dayNum: 5, title: "Дроби и рациональные уравнения", isRest: false, topics: [
+                            { id: "t_5_1", name: "Основное свойство рациональной дроби", diff: "easy" },
+                            { id: "t_5_2", name: "Тождественные преобразования рациональных выражений", diff: "medium" },
+                            { id: "t_5_3", name: "Решение дробно-рациональных уравнений", diff: "medium" },
+                            { id: "t_5_4", name: "Решение задач с составлением дробно-рациональных уравнений", diff: "hard" }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "Блок 2: Неравенства, степени, корни (Дни 6–11)",
+                days: [
+                    {
+                        dayNum: 6, title: "Числовые неравенства", isRest: false, topics: [
+                            { id: "t_6_1", name: "Числовые промежутки, пересечение и объединение множеств", diff: "easy" },
+                            { id: "t_6_2", name: "Числовые неравенства, основные свойства", diff: "easy" },
+                            { id: "t_6_3", name: "Сложение и умножение неравенств", diff: "medium" },
+                            { id: "t_6_4", name: "Решение систем линейных неравенств", diff: "medium" }
+                        ]
+                    },
+                    {
+                        dayNum: 7, title: "День отдыха и повторения материала", isRest: true, topics: []
+                    },
+                    {
+                        dayNum: 8, title: "Степени и базовые корни", isRest: false, topics: [
+                            { id: "t_8_1", name: "Степень с натур. и отрицат. показателем. Свойства", diff: "easy" },
+                            { id: "t_8_2", name: "Стандартный вид числа", diff: "easy" },
+                            { id: "t_8_3", name: "Квадратный корень, арифметический квадратный корень", diff: "medium" },
+                            { id: "t_8_4", name: "Свойства арифметического квадратного корня", diff: "medium" },
+                            { id: "t_8_5", name: "Функция y = √x, её свойства и график", diff: "medium" }
+                        ]
+                    },
+                    {
+                        dayNum: 9, title: "Уравнения высших степеней и метод интервалов", isRest: false, topics: [
+                            { id: "t_9_1", name: "Биквадратные уравнения", diff: "medium" },
+                            { id: "t_9_2", name: "Теорема Виета", diff: "easy" },
+                            { id: "t_9_3", name: "Решение уравнений введением новой переменной", diff: "medium" },
+                            { id: "t_9_4", name: "Решение неравенств методом интервалов", diff: "hard" }
+                        ]
+                    },
+                    {
+                        dayNum: 10, title: "Корни n-ой степени и иррациональные уравнения", isRest: false, topics: [
+                            { id: "t_10_1", name: "Корень n-ой степени и его свойства", diff: "hard" },
+                            { id: "t_10_2", name: "Внесение множителей под знак/из-под знака корня", diff: "medium" },
+                            { id: "t_10_3", name: "Степень с рациональным показателем", diff: "medium" },
+                            { id: "t_10_4", name: "Иррациональные уравнения", diff: "hard" }
+                        ]
+                    },
+                    {
+                        dayNum: 11, title: "Прогрессии", isRest: false, topics: [
+                            { id: "t_11_1", name: "Арифметическая прогрессия (сумма первых n-членов)", diff: "medium" },
+                            { id: "t_11_2", name: "Геометрическая прогрессия, характеристическое свойство", diff: "medium" },
+                            { id: "t_11_3", name: "Сумма первых членов геометрической прогрессии", diff: "medium" },
+                            { id: "t_11_4", name: "Бесконечно убывающая геометрическая прогрессия", diff: "hard" }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "Блок 3: Геометрия и векторы (Дни 12–16)",
+                days: [
+                    {
+                        dayNum: 12, title: "Базовая планиметрия (круги и площади)", isRest: false, topics: [
+                            { id: "t_12_1", name: "Окружность и круг", diff: "easy" },
+                            { id: "t_12_2", name: "Длина окружности, площадь круга", diff: "easy" },
+                            { id: "t_12_3", name: "Площади основных фигур", diff: "medium" }
+                        ]
+                    },
+                    {
+                        dayNum: 13, title: "Треугольники", isRest: false, topics: [
+                            { id: "t_13_1", name: "Теорема косинусов", diff: "medium" },
+                            { id: "t_13_2", name: "Теорема синусов", diff: "medium" },
+                            { id: "t_13_3", name: "Решение треугольников", diff: "hard" }
+                        ]
+                    },
+                    {
+                        dayNum: 14, title: "День отдыха и повторения геометрии", isRest: true, topics: []
+                    },
+                    {
+                        dayNum: 15, title: "Векторы", isRest: false, topics: [
+                            { id: "t_15_1", name: "Вектор, координаты вектора", diff: "medium" },
+                            { id: "t_15_2", name: "Правило параллелограмма, сложение векторов", diff: "medium" },
+                            { id: "t_15_3", name: "Умножение вектора на число", diff: "medium" },
+                            { id: "t_15_4", name: "Скалярное произведение векторов", diff: "hard" }
+                        ]
+                    },
+                    {
+                        dayNum: 16, title: "Стереометрия", isRest: false, topics: [
+                            { id: "t_16_1", name: "Цилиндр", diff: "easy" },
+                            { id: "t_16_2", name: "Конус", diff: "easy" },
+                            { id: "t_16_3", name: "Шар", diff: "easy" }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "Блок 4: Тригонометрия, Показатели, Логарифмы (Дни 17–23)",
+                days: [
+                    {
+                        dayNum: 17, title: "Основы тригонометрии", isRest: false, topics: [
+                            { id: "t_17_1", name: "Тригонометрия, тригонометрические функции", diff: "medium" },
+                            { id: "t_17_2", name: "Синус, косинус", diff: "medium" },
+                            { id: "t_17_3", name: "Тангенс, котангенс", diff: "medium" }
+                        ]
+                    },
+                    {
+                        dayNum: 18, title: "Тригонометрические преобразования", isRest: false, topics: [
+                            { id: "t_18_1", name: "Сумма и разность тригонометрических функций", diff: "hard" },
+                            { id: "t_18_2", name: "Преобразование произведения триг. функций в сумму", diff: "hard" },
+                            { id: "t_18_3", name: "Обратные тригонометрические функции", diff: "hard" },
+                            { id: "t_18_4", name: "Четность/нечетность обратных триг. функций", diff: "hard" }
+                        ]
+                    },
+                    {
+                        dayNum: 19, title: "Тригонометрические уравнения", isRest: false, topics: [
+                            { id: "t_19_1", name: "Решение введением новой переменной (сведение к квадратному)", diff: "hard" },
+                            { id: "t_19_2", name: "Однородные тригонометрические уравнения", diff: "hard" },
+                            { id: "t_19_3", name: "Решение уравнений понижением степени", diff: "hard" },
+                            { id: "t_19_4", name: "Уравнения вида a*sin(x) + b*cos(x) = c", diff: "hard" }
+                        ]
+                    },
+                    {
+                        dayNum: 20, title: "Показательные уравнения и неравенства", isRest: false, topics: [
+                            { id: "t_20_1", name: "Показательные уравнения (сведение к одному основанию)", diff: "medium" },
+                            { id: "t_20_2", name: "Способ: показатели одинаковые, основания – разные", diff: "medium" },
+                            { id: "t_20_3", name: "Введение новой переменной в показательных уравнениях", diff: "medium" },
+                            { id: "t_20_4", name: "Решение показательных неравенств", diff: "hard" }
+                        ]
+                    },
+                    {
+                        dayNum: 21, title: "День отдыха и восстановление сил", isRest: true, topics: []
+                    },
+                    {
+                        dayNum: 22, title: "Логарифмы (Теория и функции)", isRest: false, topics: [
+                            { id: "t_22_1", name: "Логарифмы, свойства логарифмов", diff: "medium" },
+                            { id: "t_22_2", name: "Логарифмическая функция", diff: "medium" },
+                            { id: "t_22_3", name: "Логарифмирование показательных уравнений", diff: "hard" }
+                        ]
+                    },
+                    {
+                        dayNum: 23, title: "Логарифмические уравнения и неравенства", isRest: false, topics: [
+                            { id: "t_23_1", name: "Решение уравнений по определению и свойствам логарифмов", diff: "hard" },
+                            { id: "t_23_2", name: "Решение лог. уравнений введением новой переменной", diff: "hard" },
+                            { id: "t_23_3", name: "Логарифмические неравенства", diff: "hard" }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "Блок 5: Начала математического анализа (Дни 24–27)",
+                days: [
+                    {
+                        dayNum: 24, title: "Пределы", isRest: false, topics: [
+                            { id: "t_24_1", name: "Понятие предела последовательности", diff: "easy" },
+                            { id: "t_24_2", name: "Некоторые теоремы о пределах", diff: "medium" },
+                            { id: "t_24_3", name: "Понятие предела функции", diff: "medium" }
+                        ]
+                    },
+                    {
+                        dayNum: 25, title: "Введение в производную", isRest: false, topics: [
+                            { id: "t_25_1", name: "Приращение аргумента, приращение функции", diff: "medium" },
+                            { id: "t_25_2", name: "Понятие и определение производной", diff: "medium" },
+                            { id: "t_25_3", name: "Механический и физический смысл производной", diff: "medium" }
+                        ]
+                    },
+                    {
+                        dayNum: 26, title: "Правила вычисления производной (Часть 1)", isRest: false, topics: [
+                            { id: "t_26_1", name: "Правила вычисления производной (база)", diff: "medium" },
+                            { id: "t_26_2", name: "Производная тригонометрической функции", diff: "hard" }
+                        ]
+                    },
+                    {
+                        dayNum: 27, title: "Вычисление производной (Часть 2)", isRest: false, topics: [
+                            { id: "t_27_1", name: "Производная показательной функции", diff: "medium" },
+                            { id: "t_27_2", name: "Производная логарифмической функции", diff: "medium" },
+                            { id: "t_27_3", name: "Сложные функции и закрепление", diff: "hard" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        let totalTopicsCount = 0;
+        
+        // Маппинг бейджиков сложности
+        const diffConfig = {
+            'easy': { label: '🟢 Лёгкая', class: 'bg-green-100 text-green-700 border-green-200' },
+            'medium': { label: '🟡 Средняя', class: 'bg-yellow-100 text-yellow-700 border-yellow-200' },
+            'hard': { label: '🔴 Сложная', class: 'bg-red-100 text-red-700 border-red-200' }
+        };
+
+        function renderUI() {
+            const container = document.getElementById('app-container');
+            let html = '';
+
+            syllabusData.forEach(block => {
+                html += `
+                    <div class="mb-10">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4 pl-1 border-l-4 border-indigo-500">${block.title}</h2>
+                        <div class="space-y-3">
+                `;
+
+                block.days.forEach(day => {
+                    if (day.isRest) {
+                        html += `
+                            <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100 flex items-center justify-between shadow-sm">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-indigo-100 text-indigo-500 rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">🍵</div>
+                                    <div>
+                                        <h3 class="font-semibold text-indigo-900">День ${day.dayNum}: ${day.title}</h3>
+                                        <p class="text-sm text-indigo-700">Сделайте перерыв, математике тоже нужно улечься в голове.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        totalTopicsCount += day.topics.length;
+                        html += `
+                            <details class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden" ${day.dayNum === 1 ? 'open' : ''}>
+                                <summary class="cursor-pointer p-4 hover:bg-slate-50 font-medium flex justify-between items-center transition-colors select-none">
+                                    <div class="flex items-center gap-3">
+                                        <div class="bg-slate-100 text-slate-500 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+                                            ${day.dayNum}
+                                        </div>
+                                        <span class="text-slate-800">День ${day.dayNum}: ${day.title}</span>
+                                    </div>
+                                    <svg class="w-5 h-5 text-slate-400 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </summary>
+                                <div class="p-4 border-t border-slate-100 flex flex-col gap-3 bg-slate-50/50">
+                        `;
+
+                        day.topics.forEach(topic => {
+                            const badge = diffConfig[topic.diff];
+                            html += `
+                                <label class="flex items-start gap-3 cursor-pointer p-2 hover:bg-white rounded-lg transition-colors group/item">
+                                    <div class="pt-0.5">
+                                        <input type="checkbox" id="${topic.id}" class="custom-checkbox topic-checkbox" disabled>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                            <span class="text-slate-700 font-medium group-hover/item:text-indigo-600 transition-colors">${topic.name}</span>
+                                            <span class="text-xs px-2.5 py-1 rounded-full border whitespace-nowrap ${badge.class}">${badge.label}</span>
+                                        </div>
+                                    </div>
+                                </label>
+                            `;
+                        });
+
+                        html += `
+                                </div>
+                            </details>
+                        `;
+                    }
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Инициализация UI до загрузки Firebase
+        renderUI();
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Системные переменные окружения
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'demo-ege-app';
+        const fbConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth;
+        let currentUser = null;
+        let progressState = {}; // Объект для хранения пройденных тем { 't_1_1': true, ... }
+        let saveTimeout = null;
+
+        if (fbConfig) {
+            const app = initializeApp(fbConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+
+            // Аутентификация
+            const authenticate = async () => {
+                try {
+                    if (initialToken) {
+                        await signInWithCustomToken(auth, initialToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Ошибка авторизации Firebase:", error);
+                    document.getElementById('auth-status').innerText = "Ошибка сохранения (Офлайн)";
+                    document.getElementById('auth-status').classList.add('text-red-500');
+                    enableCheckboxes(); // Разрешить кликать, но без сохранения
+                }
+            };
+
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    currentUser = user;
+                    document.getElementById('auth-status').innerText = "Синхронизировано ✔️";
+                    document.getElementById('auth-status').classList.remove('text-red-500');
+                    document.getElementById('auth-status').classList.add('text-green-600');
+                    await loadProgress();
+                }
+            });
+
+            authenticate();
+        } else {
+            console.warn("Firebase конфигурация не найдена. Работаем локально (без сохранения).");
+            document.getElementById('auth-status').innerText = "Локальный режим";
+            enableCheckboxes();
+        }
+
+        async function loadProgress() {
+            if (!currentUser || !db) return;
+            
+            try {
+                // ПРАВИЛО 1: Строгий путь /artifacts/{appId}/users/{userId}/{collectionName}
+                const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'progress', 'main');
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    progressState = docSnap.data().topics || {};
+                } else {
+                    progressState = {};
+                }
+                
+                applyProgressToUI();
+                enableCheckboxes();
+                updateProgressBar();
+
+            } catch (error) {
+                console.error("Ошибка при загрузке прогресса:", error);
+            }
+        }
+
+        function applyProgressToUI() {
+            const checkboxes = document.querySelectorAll('.topic-checkbox');
+            checkboxes.forEach(cb => {
+                if (progressState[cb.id]) {
+                    cb.checked = true;
+                }
+            });
+        }
+
+        function enableCheckboxes() {
+            const checkboxes = document.querySelectorAll('.topic-checkbox');
+            checkboxes.forEach(cb => {
+                cb.disabled = false;
+                
+                // Добавляем слушатель событий на изменение
+                cb.addEventListener('change', (e) => {
+                    handleCheckboxChange(e.target.id, e.target.checked);
+                });
+            });
+        }
+
+        function handleCheckboxChange(topicId, isChecked) {
+            // Обновляем локальное состояние
+            if (isChecked) {
+                progressState[topicId] = true;
+            } else {
+                delete progressState[topicId];
+            }
+            
+            // Пересчитываем прогресс-бар
+            updateProgressBar();
+
+            // Дебаунс для сохранения в Firebase (чтобы не спамить запросами)
+            if (currentUser && db) {
+                document.getElementById('auth-status').innerText = "Сохранение...";
+                document.getElementById('auth-status').classList.replace('text-green-600', 'text-yellow-600');
+                
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => {
+                    saveProgressToFirebase();
+                }, 1000);
+            }
+        }
+
+        async function saveProgressToFirebase() {
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'progress', 'main');
+                await setDoc(docRef, { topics: progressState }, { merge: true });
+                
+                document.getElementById('auth-status').innerText = "Синхронизировано ✔️";
+                document.getElementById('auth-status').classList.replace('text-yellow-600', 'text-green-600');
+            } catch (error) {
+                console.error("Ошибка при сохранении:", error);
+                document.getElementById('auth-status').innerText = "Ошибка сохранения";
+                document.getElementById('auth-status').classList.replace('text-yellow-600', 'text-red-500');
+            }
+        }
+
+        function updateProgressBar() {
+            const completedCount = Object.keys(progressState).length;
+            const percentage = totalTopicsCount === 0 ? 0 : Math.round((completedCount / totalTopicsCount) * 100);
+            
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            document.getElementById('progress-text').innerText = `${percentage}%`;
+            document.getElementById('progress-count').innerText = `${completedCount} / ${totalTopicsCount} тем`;
+
+            // Меняем цвет бара в зависимости от успеха
+            const bar = document.getElementById('progress-bar');
+            if (percentage === 100) {
+                bar.classList.replace('bg-indigo-500', 'bg-green-500');
+                document.getElementById('progress-text').classList.replace('text-indigo-600', 'text-green-600');
+            } else {
+                bar.classList.replace('bg-green-500', 'bg-indigo-500');
+                document.getElementById('progress-text').classList.replace('text-green-600', 'text-indigo-600');
+            }
+        }
+        
+        // Вызов первичного обновления прогресс-бара для отображения 0 / X тем
+        updateProgressBar();
+    </script>
+</body>
+</html>
