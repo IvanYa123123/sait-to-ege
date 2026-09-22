@@ -22,7 +22,6 @@
         }
 
         [data-theme="light"] {
-            /* Светлая тема */
             --bg-color: #f3f4f6;
             --card-bg: #ffffff;
             --text-main: #1f2937;
@@ -35,7 +34,6 @@
         }
 
         [data-theme="pink"] {
-            /* Розовая тема */
             --bg-color: #fdf2f8;
             --card-bg: #ffffff;
             --text-main: #831843;
@@ -50,39 +48,49 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
         body { background-color: var(--bg-color); color: var(--text-main); padding: 20px; }
         
-        header { max-width: 1400px; margin: 0 auto 30px auto; text-align: center; }
-        h1 { font-size: 2.5rem; margin-bottom: 15px; color: var(--text-main); }
+        header { max-width: 1400px; margin: 0 auto 30px auto; }
         
-        .controls {
-            display: flex; justify-content: space-between; align-items: center;
-            background: var(--card-bg); padding: 20px; border-radius: 15px;
-            border: 1px solid var(--border); margin-bottom: 30px; flex-wrap: wrap; gap: 15px;
-        }
+        /* Верхняя панель: Заголовок и Таймер */
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 20px; }
+        h1 { font-size: 2.5rem; color: var(--text-main); text-align: left; margin: 0;}
         
-        .progress-container { flex-grow: 1; min-width: 250px; }
-        .progress-bar-bg { background: var(--border); height: 12px; border-radius: 6px; margin-top: 8px; overflow: hidden; }
+        .timer-widget { display: flex; align-items: center; gap: 15px; background: var(--card-bg); padding: 10px 25px; border-radius: 50px; border: 1px solid var(--accent); box-shadow: 0 0 15px rgba(0, 216, 255, 0.1); }
+        .timer-display { font-size: 2rem; font-weight: bold; font-variant-numeric: tabular-nums; color: var(--text-main); }
+        .timer-controls button { padding: 8px 12px; font-size: 1.2rem; border-radius: 50%; width: 45px; height: 45px; display: inline-flex; align-items: center; justify-content: center; }
+
+        .controls { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
+        
+        .progress-container { flex-grow: 1; min-width: 300px; }
+        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: bold;}
+        .analytics { display: flex; gap: 12px; font-size: 0.9rem; font-weight: normal; background: var(--input-bg); padding: 4px 10px; border-radius: 20px;}
+        .progress-bar-bg { background: var(--border); height: 12px; border-radius: 6px; overflow: hidden; }
         .progress-bar-fill { background: linear-gradient(90deg, var(--accent), var(--done-color)); height: 100%; width: 0%; transition: 0.5s; }
         
-        .settings-group { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-        .control-item { display: flex; align-items: center; gap: 10px; background: var(--input-bg); padding: 8px 15px; border-radius: 8px; border: 1px solid var(--border); }
-        .control-item input, .control-item select { background: transparent; color: var(--text-main); border: none; font-size: 1rem; cursor: pointer; outline: none; }
+        .settings-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .control-item { display: flex; align-items: center; gap: 8px; background: var(--input-bg); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); }
+        .control-item input, .control-item select { background: transparent; color: var(--text-main); border: none; font-size: 0.95rem; cursor: pointer; outline: none; }
         
         button { background: var(--accent); color: #fff; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
         button:hover { opacity: 0.8; transform: translateY(-1px); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); text-shadow: none; }
+        .btn-outline:hover { background: var(--input-bg); }
         
         .calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; max-width: 1400px; margin: 0 auto; }
         .day-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 15px; display: flex; flex-direction: column; min-height: 150px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .day-card.drag-over { border-color: var(--accent); box-shadow: 0 0 15px rgba(0, 216, 255, 0.3); transform: scale(1.02); }
         
         .day-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border); font-weight: bold; font-size: 1.1rem; }
         .day-title-group { display: flex; flex-direction: column; gap: 4px; }
         .day-date { font-size: 0.85rem; color: var(--accent); font-weight: normal; }
         
-        .topic-list { flex-grow: 1; display: flex; flex-direction: column; gap: 10px; }
-        .topic-item { background: var(--input-bg); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; border-left: 4px solid var(--border); }
+        .topic-list { flex-grow: 1; display: flex; flex-direction: column; gap: 10px; min-height: 50px; }
+        .topic-item { background: var(--input-bg); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; border-left: 4px solid var(--border); cursor: grab; }
+        .topic-item:active { cursor: grabbing; }
         .topic-item.done { opacity: 0.5; border-left-color: var(--done-color); }
         .topic-item.done .topic-text { text-decoration: line-through; color: var(--text-muted); }
         
-        .topic-header-row { display: flex; align-items: flex-start; gap: 10px; width: 100%; }
+        .topic-header-row { display: flex; align-items: flex-start; gap: 10px; width: 100%; pointer-events: none; }
+        .topic-header-row > * { pointer-events: auto; } /* Чтобы работали кнопки внутри перетаскиваемого блока */
         
         .diff-indicator { width: 16px; height: 16px; border-radius: 50%; cursor: pointer; flex-shrink: 0; margin-top: 3px; }
         .diff-level-0 { background-color: var(--diff-0); box-shadow: 0 0 8px var(--diff-0); }
@@ -98,7 +106,7 @@
         /* Modals */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--modal-bg); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 15px; border: 1px solid var(--border); width: 100%; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 15px; border: 1px solid var(--border); width: 100%; max-width: 500px; }
         .modal-content h2 { margin-bottom: 20px; font-size: 1.5rem; color: var(--text-main); }
         .modal-content textarea, .modal-content input, .modal-content select { width: 100%; background: var(--input-bg); border: 1px solid var(--border); color: var(--text-main); padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 1rem; resize: vertical; outline: none; }
         .modal-content textarea { min-height: 120px; }
@@ -113,48 +121,79 @@
         #praise-screen.show #praise-text { transform: scale(1); }
 
         @media (max-width: 768px) {
+            .top-bar { justify-content: center; }
             #praise-text { font-size: 2.5rem; }
             .controls { flex-direction: column; align-items: stretch; }
-            .settings-group { justify-content: space-between; }
+            .settings-group { justify-content: flex-start; }
+            .timer-widget { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>ЕГЭ Математика: План</h1>
+        <div class="top-bar">
+            <h1>ЕГЭ Математика</h1>
+            <div class="timer-widget">
+                <span title="Таймер Помодоро">⏱️</span>
+                <div class="timer-display" id="timer-display">45:00</div>
+                <div class="timer-controls">
+                    <button id="timer-btn" onclick="toggleTimer()">▶</button>
+                    <button onclick="resetTimer()" style="background: var(--border); color: var(--text-main);">↺</button>
+                </div>
+            </div>
+        </div>
+
         <div class="controls">
             <div class="progress-container">
-                <div style="margin-bottom: 5px;">Прогресс: <span id="progress-text" style="font-weight:bold;">0/0</span> (<span id="progress-percent">0</span>%)</div>
+                <div class="progress-header">
+                    <div>Прогресс: <span id="progress-text">0/0</span> (<span id="progress-percent">0</span>%)</div>
+                    <div class="analytics">
+                        <span title="Лёгкие">🟢 <span id="count-0">0</span></span>
+                        <span title="Средние">🟡 <span id="count-1">0</span></span>
+                        <span title="Сложные">🔴 <span id="count-2">0</span></span>
+                    </div>
+                </div>
                 <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
             </div>
             
             <div class="settings-group">
                 <div class="control-item">
-                    <span title="Тема оформления">🎨</span>
-                    <select id="theme-select" onchange="changeTheme(this.value)">
-                        <option value="dark">Тёмная тема</option>
-                        <option value="light">Светлая тема</option>
-                        <option value="pink">Тема для Саши 🌸</option>
+                    <span title="Фильтр">🔍</span>
+                    <select id="filter-select" onchange="changeFilter(this.value)">
+                        <option value="all">Все темы</option>
+                        <option value="active">Скрыть выполненные</option>
+                        <option value="hard">Только сложные (🔴)</option>
                     </select>
                 </div>
-
+                <div class="control-item">
+                    <span title="Тема оформления">🎨</span>
+                    <select id="theme-select" onchange="changeTheme(this.value)">
+                        <option value="dark">Тёмная</option>
+                        <option value="light">Светлая</option>
+                        <option value="pink">Розовая 🌸</option>
+                    </select>
+                </div>
                 <div class="control-item">
                     <span title="Дата старта">📅</span>
                     <input type="date" id="start-date" onchange="updateStartDate(this.value)">
                 </div>
             </div>
 
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <button onclick="openAddTopicModal()" style="flex:1;">+ Добавить тему</button>
-                <button onclick="addNewDay()" style="background: var(--done-color); flex:1;">+ Добавить день</button>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="btn-outline" onclick="exportData()" title="Скачать сохранение">💾 Экспорт</button>
+                <button class="btn-outline" onclick="document.getElementById('import-file').click()" title="Загрузить сохранение">📂 Импорт</button>
+                <input type="file" id="import-file" style="display:none" accept=".json" onchange="importData(event)">
+                
+                <button onclick="openAddTopicModal()">+ Тема</button>
+                <button onclick="addNewDay()" style="background: var(--done-color);">+ День</button>
             </div>
         </div>
     </header>
 
     <div class="calendar-grid" id="calendar"></div>
 
-    <!-- Модалка для заметки -->
+    <!-- Модалки -->
     <div class="modal-overlay" id="note-modal">
         <div class="modal-content">
             <h2>Заметка к теме</h2>
@@ -167,7 +206,6 @@
         </div>
     </div>
 
-    <!-- Модалка для добавления темы -->
     <div class="modal-overlay" id="add-modal">
         <div class="modal-content">
             <h2>Новая тема</h2>
@@ -180,17 +218,13 @@
         </div>
     </div>
 
-    <!-- Экран похвалы -->
-    <div id="praise-screen">
-        <div id="praise-text">Молодец, Саша!</div>
-    </div>
+    <div id="praise-screen"><div id="praise-text">Молодец, Саша!</div></div>
 
     <script>
         const rawTopics = [
             "линейное уравнение с одной переменной", "уравнение с модулем", "тождество и тождественные выражения", "степень с натуральным показателем свойства степени", "одночлен", "многочлен", "способ группировки", "функция", "некоторые виды ООФ", "Линейная функция", "частный случай линейной функции", "нахождение координат точки пересечения алгебраически", "линейное уравнение с двумя переменными", "решение систем линейных уравнений", "графические способ решения систем уравнений", "взаимное расположение прямых", "решение системы уравнений способом подстановки", "решение систем уравнений и способом сложения", "основное свойство рациональной дроби", "тождественные преобразования рациональных выражений", "решение дробно рациональных уравнений", "решение задач со составлением дробно рациональных уравнений", "степень с отрицательным показателем", "квадратный корень. Арифметический квадратный корень", "стандартный вид числа", "свойства арифметического квадратного корня", "функция игрек равная корень из икс, её свойства и график", "биквадратные уравнения", "теорема виета", "решение дробное рациональных уравнений", "решение уравнений введением новой переменной", "числовые неравенства", "основные свойства числовых неравенств", "сложения и умножение неравенств", "числовые промежутки", "неравенства продолжения", "решение систем линейных неравенств", "пересечении объединения множеств", "теорема косинусов", "теорема синусов", "решение треугольников", "вектор", "координаты вектора", "правила параллелограмма сложения векторов", "умножение вектора на число", "скалярное произведение векторов", "тригонометрические функции", "площади", "длина окружности и площадь круга (продолжение)", "сумма н-первых членов арифметической прогрессии", "геометрическая прогрессия", "сумма первых членов геометрической прогрессии", "характеристическое свойство геометрической прогрессии", "решение неравенств методом интервалов", "корень н-ой степени", "свойства арифметического корня квадратного н-ой степени", "внесение множителей из знака корня", "бесконечно убывающая геометрическая прогрес", "степень с рациональным показателем", "иррациональные уравнения", "способ введения новой переменной", "показательные уравнения", "решение показательных уравнений введением новой переменной", "способ показатели одинаковые, основания – разные", "решение показательных неравенств", "логарифмы", "свойства логарифмов", "решение показательных уравнений способом логарифмирования", "логарифмическая функция", "решение логарифмической уравнений", "решение уравнений по свойствам логарифмов", "решение логарифмических уравнений введением новой переменной", "логарифмические неравенства", "тригонометрия", "суммой и разность тригонометрических функций", "преобразование произведения тригонометрической функции сумму", "обратные тригонометрические функции", "четность нечестность обратных тригонометрических функций", "синус", "косинус", "тангенс", "котангенс", "решение тригонометрических функций введением новой переменной уравнение приводимое к квадратному", "однородные тригонометрические уравнения", "решение тригонометрических уравнений по понижением степени", "уравнение вида а синус икс плюс б косинус икс равно с", "понятие предела последовательности", "некоторые теоремы о пределах", "понятие пределах функции", "понятие производной приращении аргумента", "определение производной", "механический физический смысл производной", "правила вычисления производной", "производная тригонометрической функции", "производная показательной функции", "производная логарифмической функции", "производная продолжение"
         ];
 
-        // Расширенный список похвалы для Саши
         const praises = [
             "Молодец, Саша!", "Умница, Саша!", "Отлично справляешься!", 
             "Саша, ты просто супер!", "Так держать, Саша!", "Горжусь тобой, Саша!",
@@ -200,17 +234,50 @@
             "Просто космос, Саша!", "Прекрасный результат!"
         ];
 
-        let appData = {
-            startDate: "", 
-            theme: "dark", // Тема по умолчанию
-            days: []
-        };
-
+        let appData = { startDate: "", theme: "dark", days: [] };
         let currentEditDayIndex = null;
         let currentEditTopicIndex = null;
+        let currentFilter = "all";
 
+        // Таймер Помодоро
+        let timerTime = 45 * 60;
+        let timerInterval = null;
+
+        function toggleTimer() {
+            if(timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                document.getElementById('timer-btn').innerText = '▶';
+            } else {
+                timerInterval = setInterval(() => {
+                    if(timerTime > 0) {
+                        timerTime--;
+                        updateTimerDisplay();
+                    } else {
+                        resetTimer();
+                        alert("Время вышло! Ты отлично поработала, Саша. Сделай перерыв 10 минут.");
+                    }
+                }, 1000);
+                document.getElementById('timer-btn').innerText = '⏸';
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timerTime = 45 * 60;
+            updateTimerDisplay();
+            document.getElementById('timer-btn').innerText = '▶';
+        }
+
+        function updateTimerDisplay() {
+            let m = Math.floor(timerTime / 60).toString().padStart(2, '0');
+            let s = (timerTime % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').innerText = `${m}:${s}`;
+        }
+
+        // Инициализация
         function init() {
-            // Безопасная миграция с прошлой версии
             const savedData = localStorage.getItem('egeSasha_v3');
             if (savedData) {
                 appData = JSON.parse(savedData);
@@ -218,12 +285,10 @@
             } else {
                 generateData();
             }
-            
-            // Восстановление настроек
             if(appData.startDate) document.getElementById('start-date').value = appData.startDate;
             document.getElementById('theme-select').value = appData.theme;
             applyTheme(appData.theme);
-            
+            updateTimerDisplay();
             render();
         }
 
@@ -243,21 +308,10 @@
             saveData();
         }
 
-        function changeTheme(themeName) {
-            appData.theme = themeName;
-            applyTheme(themeName);
-            saveData();
-        }
-
-        function applyTheme(themeName) {
-            document.documentElement.setAttribute('data-theme', themeName);
-        }
-
-        function updateStartDate(val) {
-            appData.startDate = val;
-            saveData();
-            render();
-        }
+        function changeTheme(themeName) { appData.theme = themeName; applyTheme(themeName); saveData(); }
+        function applyTheme(themeName) { document.documentElement.setAttribute('data-theme', themeName); }
+        function updateStartDate(val) { appData.startDate = val; saveData(); render(); }
+        function changeFilter(val) { currentFilter = val; render(); }
 
         function getCalculatedDate(dayIndex) {
             if (!appData.startDate) return "";
@@ -266,10 +320,10 @@
             return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', weekday: 'short' });
         }
 
+        // Рендер и Drag & Drop
         function render() {
             const container = document.getElementById('calendar');
             const selectDay = document.getElementById('new-topic-day');
-            
             container.innerHTML = '';
             selectDay.innerHTML = '';
 
@@ -281,19 +335,17 @@
 
                 const card = document.createElement('div');
                 card.className = 'day-card';
+                card.setAttribute('ondragover', 'allowDrop(event, this)');
+                card.setAttribute('ondragleave', 'leaveDrop(this)');
+                card.setAttribute('ondrop', `drop(event, ${dayIndex}, this)`);
                 
                 let dateHtml = getCalculatedDate(dayIndex);
                 if (dateHtml) dateHtml = `<span class="day-date">📅 ${dateHtml}</span>`;
 
                 card.innerHTML = `
                     <div class="day-header">
-                        <div class="day-title-group">
-                            <span>${day.title}</span>
-                            ${dateHtml}
-                        </div>
-                        <div>
-                            <button class="icon-btn" onclick="renameDay(${dayIndex})" title="Переименовать">✏️</button>
-                        </div>
+                        <div class="day-title-group"><span>${day.title}</span>${dateHtml}</div>
+                        <button class="icon-btn" onclick="renameDay(${dayIndex})" title="Переименовать">✏️</button>
                     </div>
                     <div class="topic-list" id="list-${dayIndex}"></div>
                 `;
@@ -301,8 +353,14 @@
                 const listContainer = card.querySelector('.topic-list');
 
                 day.topics.forEach((topic, topicIndex) => {
+                    // Фильтрация
+                    if (currentFilter === 'active' && topic.done) return;
+                    if (currentFilter === 'hard' && topic.diff !== 2) return;
+
                     const el = document.createElement('div');
                     el.className = `topic-item ${topic.done ? 'done' : ''}`;
+                    el.draggable = true;
+                    el.setAttribute('ondragstart', `drag(event, ${dayIndex}, ${topicIndex})`);
                     
                     let noteHtml = topic.note ? `<div class="topic-note">${topic.note}</div>` : '';
 
@@ -319,112 +377,108 @@
                 });
                 container.appendChild(card);
             });
-            updateProgress();
+            updateStats();
         }
 
-        function toggleDone(dayIndex, topicIndex, isChecked) {
-            appData.days[dayIndex].topics[topicIndex].done = isChecked;
+        // Drag & Drop Функции
+        function drag(ev, dIdx, tIdx) {
+            ev.dataTransfer.setData("text/plain", JSON.stringify({dIdx, tIdx}));
+            ev.target.style.opacity = '0.4';
+        }
+        function allowDrop(ev, el) { ev.preventDefault(); el.classList.add('drag-over'); }
+        function leaveDrop(el) { el.classList.remove('drag-over'); }
+        function drop(ev, targetDayIdx, el) {
+            ev.preventDefault();
+            el.classList.remove('drag-over');
+            const data = ev.dataTransfer.getData("text/plain");
+            if(!data) return;
+            const {dIdx, tIdx} = JSON.parse(data);
+            if(dIdx === targetDayIdx) { render(); return; } // Тот же день
+            
+            const topic = appData.days[dIdx].topics.splice(tIdx, 1)[0];
+            appData.days[targetDayIdx].topics.push(topic);
             saveData();
             render();
-            if(isChecked) showPraise();
         }
 
-        function toggleDiff(dayIndex, topicIndex) {
-            let current = appData.days[dayIndex].topics[topicIndex].diff;
-            appData.days[dayIndex].topics[topicIndex].diff = current >= 2 ? 0 : current + 1;
-            saveData();
-            render();
+        // Экспорт / Импорт
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData));
+            const anchor = document.createElement('a');
+            anchor.setAttribute("href", dataStr);
+            anchor.setAttribute("download", "ege_plan_sasha.json");
+            document.body.appendChild(anchor);
+            anchor.click();
+            anchor.remove();
         }
 
-        function renameDay(dayIndex) {
-            let currentTitle = appData.days[dayIndex].title;
-            let newTitle = prompt("Введите новое название дня:", currentTitle);
-            if (newTitle && newTitle.trim() !== "") {
-                appData.days[dayIndex].title = newTitle;
-                saveData();
-                render();
-            }
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if(imported && imported.days) {
+                        appData = imported;
+                        saveData();
+                        init();
+                        alert("Сохранение успешно загружено!");
+                    }
+                } catch (err) { alert("Ошибка! Неверный файл сохранения."); }
+            };
+            reader.readAsText(file);
         }
 
-        function addNewDay() {
-            let newNum = appData.days.length + 1;
-            appData.days.push({
-                title: `Новый День ${newNum}`,
-                topics: []
-            });
-            saveData();
-            render();
-            window.scrollTo(0, document.body.scrollHeight);
-        }
+        // Управление темами
+        function toggleDone(dIdx, tIdx, isChecked) { appData.days[dIdx].topics[tIdx].done = isChecked; saveData(); render(); if(isChecked) showPraise(); }
+        function toggleDiff(dIdx, tIdx) { let c = appData.days[dIdx].topics[tIdx].diff; appData.days[dIdx].topics[tIdx].diff = c >= 2 ? 0 : c + 1; saveData(); render(); }
+        function renameDay(dIdx) { let n = prompt("Новое название дня:", appData.days[dIdx].title); if (n && n.trim()!=="") { appData.days[dIdx].title = n; saveData(); render(); } }
+        function addNewDay() { appData.days.push({ title: `Новый День ${appData.days.length + 1}`, topics: [] }); saveData(); render(); window.scrollTo(0, document.body.scrollHeight); }
 
-        // --- Работа с модалками (Добавлено удаление заметки) ---
-        function openAddTopicModal() {
-            document.getElementById('new-topic-title').value = '';
-            document.getElementById('add-modal').classList.add('active');
-        }
-
+        // Модалки
+        function openAddTopicModal() { document.getElementById('new-topic-title').value = ''; document.getElementById('add-modal').classList.add('active'); }
         function addNewTopic() {
-            let title = document.getElementById('new-topic-title').value.trim();
-            let dayIndex = parseInt(document.getElementById('new-topic-day').value);
-            
-            if(!title) {
-                alert('Введите название темы!');
-                return;
-            }
-
-            appData.days[dayIndex].topics.push({
-                title: title, done: false, diff: 0, note: ""
-            });
-
-            saveData();
-            render();
-            closeModals();
+            let t = document.getElementById('new-topic-title').value.trim();
+            let d = parseInt(document.getElementById('new-topic-day').value);
+            if(!t) return alert('Введите название темы!');
+            appData.days[d].topics.push({ title: t, done: false, diff: 0, note: "" });
+            saveData(); render(); closeModals();
         }
-
-        function openNoteModal(dayIndex, topicIndex) {
-            currentEditDayIndex = dayIndex;
-            currentEditTopicIndex = topicIndex;
-            
-            let currentNote = appData.days[dayIndex].topics[topicIndex].note || "";
-            document.getElementById('note-textarea').value = currentNote;
+        function openNoteModal(dIdx, tIdx) {
+            currentEditDayIndex = dIdx; currentEditTopicIndex = tIdx;
+            document.getElementById('note-textarea').value = appData.days[dIdx].topics[tIdx].note || "";
             document.getElementById('note-modal').classList.add('active');
         }
+        function saveNote() { appData.days[currentEditDayIndex].topics[currentEditTopicIndex].note = document.getElementById('note-textarea').value.trim(); saveData(); render(); closeModals(); }
+        function deleteNote() { appData.days[currentEditDayIndex].topics[currentEditTopicIndex].note = ""; saveData(); render(); closeModals(); }
+        function closeModals() { document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active')); }
 
-        function saveNote() {
-            let text = document.getElementById('note-textarea').value.trim();
-            appData.days[currentEditDayIndex].topics[currentEditTopicIndex].note = text;
-            saveData();
-            render();
-            closeModals();
-        }
-
-        function deleteNote() {
-            appData.days[currentEditDayIndex].topics[currentEditTopicIndex].note = "";
-            saveData();
-            render();
-            closeModals();
-        }
-
-        function closeModals() {
-            document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
-        }
-
-        // --- Остальные функции ---
+        // Похвала и Статистика
         function showPraise() {
             const screen = document.getElementById('praise-screen');
-            const text = document.getElementById('praise-text');
-            text.innerText = praises[Math.floor(Math.random() * praises.length)];
+            document.getElementById('praise-text').innerText = praises[Math.floor(Math.random() * praises.length)];
             screen.classList.add('show');
             setTimeout(() => screen.classList.remove('show'), 2500);
         }
 
-        function updateProgress() {
+        function updateStats() {
             let total = 0, done = 0;
-            appData.days.forEach(d => d.topics.forEach(t => { total++; if(t.done) done++; }));
-            document.getElementById('progress-text').innerText = `${done} / ${total}`;
+            let counts = [0, 0, 0]; // 0: green, 1: yellow, 2: red
+            appData.days.forEach(d => d.topics.forEach(t => { 
+                total++; 
+                if(t.done) done++; 
+                counts[t.diff]++;
+            }));
+            
+            document.getElementById('progress-text').innerText = `${done}/${total}`;
             let percent = total === 0 ? 0 : Math.round((done / total) * 100);
             document.getElementById('progress-percent').innerText = percent;
             document.getElementById('progress-bar').style.width = percent + '%';
+            
+            document.getElementById('count-0').innerText = counts[0];
+            document.getElementById('count-1').innerText = counts[1];
+            document.getElementById('count-2').innerText = counts[2];
         }
 
         function saveData() { localStorage.setItem('egeSasha_v3', JSON.stringify(appData)); }
