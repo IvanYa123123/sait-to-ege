@@ -12,601 +12,219 @@
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
             --accent: #00d8ff;
-            --accent-hover: #00b4d8;
             --done-color: #10b981;
-            --rest-color: #f59e0b;
             --border: #2a2e41;
-            --danger: #ef4444;
+            
+            --diff-0: #10b981; /* Легкая */
+            --diff-1: #f59e0b; /* Средняя */
+            --diff-2: #ef4444; /* Сложная */
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 20px;
-        }
-
-        header {
-            max-width: 1400px;
-            margin: 0 auto 30px auto;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(0, 216, 255, 0.3);
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 20px; }
+        
+        header { max-width: 1400px; margin: 0 auto 30px auto; text-align: center; }
+        h1 { font-size: 2.5rem; margin-bottom: 15px; color: #fff; }
+        
         .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-            margin-bottom: 30px;
-        }
-
-        .progress-container {
-            flex-grow: 1;
-            margin-right: 30px;
-        }
-
-        .progress-bar-bg {
-            background: var(--border);
-            height: 12px;
-            border-radius: 6px;
-            overflow: hidden;
-            margin-top: 8px;
-        }
-
-        .progress-bar-fill {
-            background: linear-gradient(90deg, var(--accent), #00ff88);
-            height: 100%;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        button {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 1rem;
-        }
-
-        button:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 216, 255, 0.4);
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .day-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            padding: 15px;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            transition: 0.3s;
-        }
-
-        .day-card.drag-over {
-            border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(0, 216, 255, 0.2);
-            transform: scale(1.02);
-        }
-
-        .day-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .rest-day .day-header {
-            color: var(--rest-color);
-        }
-
-        .topic-list {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .topic-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            border-radius: 8px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            cursor: grab;
-            border-left: 4px solid var(--accent);
-            transition: 0.2s;
-        }
-
-        .topic-item:active {
-            cursor: grabbing;
-        }
-
-        .topic-item:hover {
-            background: var(--card-hover);
-        }
-
-        .topic-item.done {
-            opacity: 0.6;
-            border-left-color: var(--done-color);
-        }
-
-        .topic-item.done .topic-text {
-            text-decoration: line-through;
-            color: var(--text-muted);
-        }
-
-        .topic-text {
-            flex-grow: 1;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            word-break: break-word;
-        }
-
-        .topic-actions {
-            display: flex;
-            gap: 5px;
-        }
-
-        .icon-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 5px;
-            font-size: 1.1rem;
-        }
-
-        .icon-btn:hover {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            transform: none;
-            box-shadow: none;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--card-bg); padding: 20px; border-radius: 15px;
+            border: 1px solid var(--border); margin-bottom: 30px; flex-wrap: wrap; gap: 15px;
         }
         
-        .has-note {
-            color: var(--rest-color);
-        }
-
-        /* Modals */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .modal-content h2 {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-
-        .modal-content textarea, .modal-content input, .modal-content select {
-            width: 100%;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
-            color: #fff;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 1rem;
-            resize: vertical;
-        }
-
-        .modal-content textarea {
-            min-height: 120px;
-        }
-
-        .modal-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .btn-cancel {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-main);
-        }
-
-        .btn-cancel:hover {
-            background: rgba(255,255,255,0.1);
-            box-shadow: none;
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: #fff;
-            margin-right: auto;
-        }
-        .btn-danger:hover {
-            background: #dc2626;
-            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
-        }
+        .progress-container { flex-grow: 1; min-width: 300px; }
+        .progress-bar-bg { background: var(--border); height: 12px; border-radius: 6px; margin-top: 8px; }
+        .progress-bar-fill { background: linear-gradient(90deg, var(--accent), #00ff88); height: 100%; width: 0%; transition: 0.5s; }
         
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: var(--done-color);
-            margin-top: 3px;
+        button { background: var(--accent); color: #000; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        button:hover { opacity: 0.8; }
+        
+        .calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; max-width: 1400px; margin: 0 auto; }
+        .day-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 15px; display: flex; flex-direction: column; min-height: 150px; }
+        
+        .day-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border); font-weight: bold; font-size: 1.1rem; }
+        .day-title-group { display: flex; align-items: center; gap: 8px; }
+        
+        .topic-list { flex-grow: 1; display: flex; flex-direction: column; gap: 10px; }
+        .topic-item { background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px; display: flex; align-items: flex-start; gap: 10px; cursor: grab; border-left: 4px solid var(--border); }
+        .topic-item.done { opacity: 0.5; }
+        .topic-item.done .topic-text { text-decoration: line-through; color: var(--text-muted); }
+        
+        .diff-indicator { width: 16px; height: 16px; border-radius: 50%; cursor: pointer; flex-shrink: 0; margin-top: 3px; }
+        .diff-level-0 { background-color: var(--diff-0); box-shadow: 0 0 8px var(--diff-0); }
+        .diff-level-1 { background-color: var(--diff-1); box-shadow: 0 0 8px var(--diff-1); }
+        .diff-level-2 { background-color: var(--diff-2); box-shadow: 0 0 8px var(--diff-2); }
+        
+        .topic-text { flex-grow: 1; font-size: 0.95rem; }
+        .icon-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1rem; }
+        
+        /* Praise Screen */
+        #praise-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: rgba(15, 17, 26, 0.95); color: #fff;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; opacity: 0; pointer-events: none; transition: 0.4s; backdrop-filter: blur(5px);
         }
+        #praise-screen.show { opacity: 1; pointer-events: auto; }
+        #praise-text { font-size: 4rem; text-align: center; text-shadow: 0 0 20px var(--accent); transform: scale(0.5); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #praise-screen.show #praise-text { transform: scale(1); }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>ЕГЭ Математика: План 60 Дней</h1>
+        <h1>ЕГЭ Математика: План</h1>
         <div class="controls">
             <div class="progress-container">
                 <div>Прогресс: <span id="progress-text">0/0</span> (<span id="progress-percent">0</span>%)</div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="progress-bar"></div>
-                </div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
             </div>
-            <button onclick="openAddTopicModal()">+ Добавить тему</button>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="addNewDay()" style="background: var(--done-color); color: white;">+ Добавить день</button>
+            </div>
         </div>
     </header>
 
     <div class="calendar-grid" id="calendar"></div>
 
-    <!-- Modal for Notes -->
-    <div class="modal-overlay" id="note-modal">
-        <div class="modal-content">
-            <h2>Заметка к теме</h2>
-            <p id="note-topic-title" style="margin-bottom:15px; color:var(--text-muted); font-size: 0.9rem;"></p>
-            <textarea id="note-textarea" placeholder="Напишите свои мысли, формулы или ссылки здесь..."></textarea>
-            <div class="modal-buttons">
-                <button class="btn-cancel" onclick="closeModals()">Отмена</button>
-                <button onclick="saveNote()">Сохранить</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for Adding Topic -->
-    <div class="modal-overlay" id="add-modal">
-        <div class="modal-content">
-            <h2>Новая тема</h2>
-            <input type="text" id="new-topic-title" placeholder="Название темы...">
-            <select id="new-topic-day">
-                <!-- Заполняется через JS -->
-            </select>
-            <div class="modal-buttons">
-                <button class="btn-cancel" onclick="closeModals()">Отмена</button>
-                <button onclick="addNewTopic()">Добавить</button>
-            </div>
-        </div>
+    <div id="praise-screen">
+        <h1 id="praise-text">Молодец, Саша!</h1>
     </div>
 
     <script>
-        // Исходный список из 98 тем
+        // Ровно 98 тем
         const rawTopics = [
-            "окружность и круг", "длина окружности. Площадь круга.", "цилиндр. Конус. Шар.", "конус.", "шар.", "модуль числа. Алгебраическое определение модуля", "решение уравнений", "перпендикулярные прямые", "линейное уравнение с одной переменной", "уравнение с модулем", "тождество и тождественные выражения", "степень с натуральным показателем свойства степени", "одночлен", "многочлен", "способ группировки", "функция", "некоторые виды ООФ", "Линейная функция", "частный случай линейной функции", "нахождение координат точки пересечения алгебраически", "линейное уравнение с двумя переменными", "решение систем линейных уравнений", "графические способ решения систем уравнений", "взаимное расположение прямых", "решение системы уравнений способом подстановки", "решение систем уравнений и способом сложения", "основное свойство рациональной дроби", "тождественные преобразования рациональных выражений", "решение дробно рациональных уравнений", "решение задач со составлением дробно рациональных уравнений", "степень с отрицательным показателем", "квадратный корень. Арифметический квадратный корень", "стандартный вид числа", "свойства арифметического квадратного корня", "функция игрек равная корень из икс, её свойства и график", "биквадратные уравнения", "теорема виета", "решение дробное рациональных уравнений", "решение уравнений введением новой переменной", "числовые неравенства", "основные свойства числовых неравенств", "сложения и умножение неравенств", "числовые промежутки", "неравенства продолжения", "решение систем линейных неравенств", "пересечении объединения множеств", "теорема косинусов", "теорема синусов", "решение треугольников", "вектор", "координаты вектора", "правила параллелограмма сложения векторов", "умножение вектора на число", "скалярное произведение векторов", "тригонометрические функции", "площади", "длина окружности и площадь круга (продолжение)", "сумма н-первых членов арифметической прогрессии", "геометрическая прогрессия", "сумма первых членов геометрической прогрессии", "характеристическое свойство геометрической прогрессии", "решение неравенств методом интервалов", "корень н-ой степени", "свойства арифметического корня квадратного н-ой степени", "внесение множителей из знака корня", "бесконечно убывающая геометрическая прогрес", "степень с рациональным показателем", "иррациональные уравнения", "способ введения новой переменной", "показательные уравнения", "решение показательных уравнений введением новой переменной", "способ показатели одинаковые, основания – разные", "решение показательных неравенств", "логарифмы", "свойства логарифмов", "решение показательных уравнений способом логарифмирования", "логарифмическая функция", "решение логарифмической уравнений", "решение уравнений по свойствам логарифмов", "решение логарифмических уравнений введением новой переменной", "логарифмические неравенства", "тригонометрия", "суммой и разность тригонометрических функций", "преобразование произведения тригонометрической функции сумму", "обратные тригонометрические функции", "четность нечестность обратных тригонометрических функций", "синус", "косинус", "тангенс", "котангенс", "решение тригонометрических функций введением новой переменной уравнение приводимое к квадратному", "однородные тригонометрические уравнения", "решение тригонометрических уравнений по понижением степени", "уравнение вида а синус икс плюс б косинус икс равно с", "понятие предела последовательности", "некоторые теоремы о пределах", "понятие пределах функции", "понятие производной приращении аргумента", "определение производной", "механический физический смысл производной", "правила вычисления производной", "производная тригонометрической функции", "производная показательной функции", "производная логарифмической функции", "производная продолжение"
+            "линейное уравнение с одной переменной", "уравнение с модулем", "тождество и тождественные выражения", "степень с натуральным показателем свойства степени", "одночлен", "многочлен", "способ группировки", "функция", "некоторые виды ООФ", "Линейная функция", "частный случай линейной функции", "нахождение координат точки пересечения алгебраически", "линейное уравнение с двумя переменными", "решение систем линейных уравнений", "графические способ решения систем уравнений", "взаимное расположение прямых", "решение системы уравнений способом подстановки", "решение систем уравнений и способом сложения", "основное свойство рациональной дроби", "тождественные преобразования рациональных выражений", "решение дробно рациональных уравнений", "решение задач со составлением дробно рациональных уравнений", "степень с отрицательным показателем", "квадратный корень. Арифметический квадратный корень", "стандартный вид числа", "свойства арифметического квадратного корня", "функция игрек равная корень из икс, её свойства и график", "биквадратные уравнения", "теорема виета", "решение дробное рациональных уравнений", "решение уравнений введением новой переменной", "числовые неравенства", "основные свойства числовых неравенств", "сложения и умножение неравенств", "числовые промежутки", "неравенства продолжения", "решение систем линейных неравенств", "пересечении объединения множеств", "теорема косинусов", "теорема синусов", "решение треугольников", "вектор", "координаты вектора", "правила параллелограмма сложения векторов", "умножение вектора на число", "скалярное произведение векторов", "тригонометрические функции", "площади", "длина окружности и площадь круга (продолжение)", "сумма н-первых членов арифметической прогрессии", "геометрическая прогрессия", "сумма первых членов геометрической прогрессии", "характеристическое свойство геометрической прогрессии", "решение неравенств методом интервалов", "корень н-ой степени", "свойства арифметического корня квадратного н-ой степени", "внесение множителей из знака корня", "бесконечно убывающая геометрическая прогрес", "степень с рациональным показателем", "иррациональные уравнения", "способ введения новой переменной", "показательные уравнения", "решение показательных уравнений введением новой переменной", "способ показатели одинаковые, основания – разные", "решение показательных неравенств", "логарифмы", "свойства логарифмов", "решение показательных уравнений способом логарифмирования", "логарифмическая функция", "решение логарифмической уравнений", "решение уравнений по свойствам логарифмов", "решение логарифмических уравнений введением новой переменной", "логарифмические неравенства", "тригонометрия", "суммой и разность тригонометрических функций", "преобразование произведения тригонометрической функции сумму", "обратные тригонометрические функции", "четность нечестность обратных тригонометрических функций", "синус", "косинус", "тангенс", "котангенс", "решение тригонометрических функций введением новой переменной уравнение приводимое к квадратному", "однородные тригонометрические уравнения", "решение тригонометрических уравнений по понижением степени", "уравнение вида а синус икс плюс б косинус икс равно с", "понятие предела последовательности", "некоторые теоремы о пределах", "понятие пределах функции", "понятие производной приращении аргумента", "определение производной", "механический физический смысл производной", "правила вычисления производной", "производная тригонометрической функции", "производная показательной функции", "производная логарифмической функции", "производная продолжение"
+        ];
+
+        const praises = [
+            "Молодец, Саша!", "Умница, Саша!", "Отлично справляешься, Саша!", 
+            "Саша, ты просто супер!", "Так держать, Саша!", "Горжусь тобой, Саша!"
         ];
 
         let calendarData = [];
-        let draggedTopic = null;
-        let draggedFromDay = null;
-        let currentNoteTopicId = null;
-        let currentNoteDayId = null;
 
-        // Инициализация
         function init() {
-            const savedData = localStorage.getItem('egeCalendarData60');
+            const savedData = localStorage.getItem('egeSasha98');
             if (savedData) {
                 calendarData = JSON.parse(savedData);
             } else {
-                generateInitialData();
+                generateData();
             }
-            renderCalendar();
-            updateProgress();
+            render();
         }
 
-        // Генерация 60 дней и распределение тем
-        function generateInitialData() {
+        function generateData() {
             calendarData = [];
             let topicIndex = 0;
-            
-            for (let day = 1; day <= 60; day++) {
-                let isRestDay = (day % 7 === 0);
+            // 98 тем по 2 темы в день = 49 дней
+            for (let day = 1; day <= 49; day++) {
                 let dayTopics = [];
-
-                if (!isRestDay) {
-                    // Берем по 2 темы в день
-                    for(let k = 0; k < 2; k++) {
-                        if (topicIndex < rawTopics.length) {
-                            dayTopics.push({
-                                id: 'topic_' + Date.now() + Math.random().toString(36).substr(2, 9),
-                                title: rawTopics[topicIndex],
-                                done: false,
-                                note: ""
-                            });
-                            topicIndex++;
-                        }
+                for(let k = 0; k < 2; k++) {
+                    if (topicIndex < rawTopics.length) {
+                        dayTopics.push({
+                            id: 't_' + Math.random().toString(36).substr(2, 9),
+                            title: rawTopics[topicIndex],
+                            done: false,
+                            diff: 0 // 0-зеленый, 1-желтый, 2-красный
+                        });
+                        topicIndex++;
                     }
                 }
-
-                calendarData.push({
-                    dayId: day,
-                    isRest: isRestDay,
-                    topics: dayTopics
-                });
-            }
-            
-            // Если остались темы (из-за округления), докидываем их в рабочие дни
-            while(topicIndex < rawTopics.length) {
-                let targetDay = calendarData.find(d => !d.isRest && d.topics.length < 3);
-                if(!targetDay) targetDay = calendarData[0]; // fallback
-                
-                targetDay.topics.push({
-                    id: 'topic_' + Date.now() + Math.random().toString(36).substr(2, 9),
-                    title: rawTopics[topicIndex],
-                    done: false,
-                    note: ""
-                });
-                topicIndex++;
+                calendarData.push({ id: day, title: `День ${day}`, topics: dayTopics });
             }
             saveData();
         }
 
-        function saveData() {
-            localStorage.setItem('egeCalendarData60', JSON.stringify(calendarData));
-            updateProgress();
-        }
-
-        // Отрисовка
-        function renderCalendar() {
+        function render() {
             const container = document.getElementById('calendar');
             container.innerHTML = '';
-            
-            // Обновляем селект для модалки
-            const selectDay = document.getElementById('new-topic-day');
-            selectDay.innerHTML = '';
 
-            calendarData.forEach(day => {
-                // Добавляем опцию в селект
-                let opt = document.createElement('option');
-                opt.value = day.dayId;
-                opt.text = `День ${day.dayId}` + (day.isRest ? " (Отдых)" : "");
-                selectDay.appendChild(opt);
-
-                // Создаем карточку дня
+            calendarData.forEach((day, dayIndex) => {
                 const card = document.createElement('div');
-                card.className = `day-card ${day.isRest ? 'rest-day' : ''}`;
-                card.dataset.dayId = day.dayId;
-
-                // Настройка Drag and Drop для дня
-                card.addEventListener('dragover', handleDragOver);
-                card.addEventListener('dragleave', handleDragLeave);
-                card.addEventListener('drop', handleDrop);
-
+                card.className = 'day-card';
                 card.innerHTML = `
                     <div class="day-header">
-                        <span>День ${day.dayId}</span>
-                        <span>${day.isRest ? '🎮 Отдых' : ''}</span>
+                        <div class="day-title-group">
+                            <span>${day.title}</span>
+                            <button class="icon-btn" onclick="renameDay(${dayIndex})" title="Переименовать">✏️</button>
+                        </div>
                     </div>
-                    <div class="topic-list" id="list-${day.dayId}"></div>
+                    <div class="topic-list" id="list-${day.id}"></div>
                 `;
 
                 const listContainer = card.querySelector('.topic-list');
 
-                day.topics.forEach(topic => {
-                    const topicEl = document.createElement('div');
-                    topicEl.className = `topic-item ${topic.done ? 'done' : ''}`;
-                    topicEl.draggable = true;
-                    topicEl.dataset.topicId = topic.id;
-                    topicEl.dataset.dayId = day.dayId;
-
-                    // Drag and Drop для темы
-                    topicEl.addEventListener('dragstart', handleDragStart);
-                    topicEl.addEventListener('dragend', handleDragEnd);
-
-                    const noteClass = topic.note && topic.note.trim() !== '' ? 'has-note' : '';
-
-                    topicEl.innerHTML = `
-                        <input type="checkbox" ${topic.done ? 'checked' : ''} onchange="toggleDone('${day.dayId}', '${topic.id}', this.checked)">
+                day.topics.forEach((topic, topicIndex) => {
+                    const el = document.createElement('div');
+                    el.className = `topic-item ${topic.done ? 'done' : ''}`;
+                    el.innerHTML = `
+                        <div class="diff-indicator diff-level-${topic.diff}" onclick="toggleDiff(${dayIndex}, ${topicIndex})"></div>
+                        <input type="checkbox" style="margin-top:3px; cursor:pointer;" ${topic.done ? 'checked' : ''} onchange="toggleDone(${dayIndex}, ${topicIndex}, this.checked)">
                         <span class="topic-text">${topic.title}</span>
-                        <div class="topic-actions">
-                            <button class="icon-btn ${noteClass}" onclick="openNoteModal('${day.dayId}', '${topic.id}')" title="Заметки">📝</button>
-                            <button class="icon-btn" onclick="deleteTopic('${day.dayId}', '${topic.id}')" title="Удалить">❌</button>
-                        </div>
                     `;
-                    listContainer.appendChild(topicEl);
+                    listContainer.appendChild(el);
                 });
-
                 container.appendChild(card);
             });
+            updateProgress();
         }
 
-        // Логика Drag and Drop
-        function handleDragStart(e) {
-            draggedTopic = e.target.dataset.topicId;
-            draggedFromDay = parseInt(e.target.dataset.dayId);
-            setTimeout(() => e.target.style.opacity = '0.5', 0);
-        }
-
-        function handleDragEnd(e) {
-            e.target.style.opacity = '1';
-            document.querySelectorAll('.day-card').forEach(c => c.classList.remove('drag-over'));
-        }
-
-        function handleDragOver(e) {
-            e.preventDefault();
-            this.classList.add('drag-over');
-        }
-
-        function handleDragLeave(e) {
-            this.classList.remove('drag-over');
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            this.classList.remove('drag-over');
-            
-            const targetDayId = parseInt(this.dataset.dayId);
-            
-            if (draggedFromDay !== targetDayId && draggedTopic) {
-                // Находим тему
-                let sourceDay = calendarData.find(d => d.dayId === draggedFromDay);
-                let targetDay = calendarData.find(d => d.dayId === targetDayId);
-                
-                let topicIndex = sourceDay.topics.findIndex(t => t.id === draggedTopic);
-                let topicObj = sourceDay.topics.splice(topicIndex, 1)[0];
-                
-                targetDay.topics.push(topicObj);
-                
-                saveData();
-                renderCalendar();
-            }
-        }
-
-        // Управление состоянием
-        function toggleDone(dayId, topicId, isDone) {
-            let day = calendarData.find(d => d.dayId == dayId);
-            let topic = day.topics.find(t => t.id == topicId);
-            topic.done = isDone;
+        function toggleDone(dayIndex, topicIndex, isChecked) {
+            calendarData[dayIndex].topics[topicIndex].done = isChecked;
             saveData();
-            renderCalendar();
+            render();
+            if(isChecked) showPraise();
         }
 
-        function deleteTopic(dayId, topicId) {
-            if(confirm('Удалить эту тему?')) {
-                let day = calendarData.find(d => d.dayId == dayId);
-                day.topics = day.topics.filter(t => t.id != topicId);
+        function toggleDiff(dayIndex, topicIndex) {
+            let current = calendarData[dayIndex].topics[topicIndex].diff;
+            calendarData[dayIndex].topics[topicIndex].diff = current >= 2 ? 0 : current + 1;
+            saveData();
+            render();
+        }
+
+        function renameDay(dayIndex) {
+            let currentTitle = calendarData[dayIndex].title;
+            let newTitle = prompt("Введите новое название дня:", currentTitle);
+            if (newTitle && newTitle.trim() !== "") {
+                calendarData[dayIndex].title = newTitle;
                 saveData();
-                renderCalendar();
+                render();
             }
+        }
+
+        function addNewDay() {
+            let newId = calendarData.length > 0 ? Math.max(...calendarData.map(d => d.id)) + 1 : 1;
+            calendarData.push({
+                id: newId,
+                title: `Новый День ${newId}`,
+                topics: []
+            });
+            saveData();
+            render();
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        function showPraise() {
+            const screen = document.getElementById('praise-screen');
+            const text = document.getElementById('praise-text');
+            text.innerText = praises[Math.floor(Math.random() * praises.length)];
+            screen.classList.add('show');
+            setTimeout(() => screen.classList.remove('show'), 2500);
         }
 
         function updateProgress() {
-            let total = 0;
-            let done = 0;
-            
-            calendarData.forEach(day => {
-                day.topics.forEach(topic => {
-                    total++;
-                    if(topic.done) done++;
-                });
-            });
-
+            let total = 0, done = 0;
+            calendarData.forEach(d => d.topics.forEach(t => { total++; if(t.done) done++; }));
             document.getElementById('progress-text').innerText = `${done} / ${total}`;
             let percent = total === 0 ? 0 : Math.round((done / total) * 100);
             document.getElementById('progress-percent').innerText = percent;
             document.getElementById('progress-bar').style.width = percent + '%';
         }
 
-        // Модальные окна: Заметки
-        function openNoteModal(dayId, topicId) {
-            currentNoteDayId = dayId;
-            currentNoteTopicId = topicId;
-            
-            let day = calendarData.find(d => d.dayId == dayId);
-            let topic = day.topics.find(t => t.id == topicId);
-            
-            document.getElementById('note-topic-title').innerText = topic.title;
-            document.getElementById('note-textarea').value = topic.note || '';
-            
-            document.getElementById('note-modal').classList.add('active');
-        }
+        function saveData() { localStorage.setItem('egeSasha98', JSON.stringify(calendarData)); }
 
-        function saveNote() {
-            let day = calendarData.find(d => d.dayId == currentNoteDayId);
-            let topic = day.topics.find(t => t.id == currentNoteTopicId);
-            topic.note = document.getElementById('note-textarea').value;
-            
-            saveData();
-            renderCalendar();
-            closeModals();
-        }
-
-        // Модальные окна: Добавление темы
-        function openAddTopicModal() {
-            document.getElementById('new-topic-title').value = '';
-            document.getElementById('add-modal').classList.add('active');
-        }
-
-        function addNewTopic() {
-            let title = document.getElementById('new-topic-title').value.trim();
-            let dayId = parseInt(document.getElementById('new-topic-day').value);
-            
-            if(!title) {
-                alert('Введите название темы!');
-                return;
-            }
-
-            let targetDay = calendarData.find(d => d.dayId === dayId);
-            targetDay.topics.push({
-                id: 'topic_' + Date.now(),
-                title: title,
-                done: false,
-                note: ""
-            });
-
-            saveData();
-            renderCalendar();
-            closeModals();
-        }
-
-        function closeModals() {
-            document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
-        }
-
-        // Запуск
         init();
     </script>
 </body>
